@@ -1,0 +1,20 @@
+
+> ale@0.0.0 build
+> vite build
+
+[36mvite v7.3.0 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 9 modules transformed.
+[31m✗[39m Build failed in 213ms
+[31merror during build:
+[31m[commonjs--resolver] Missing "./dist/react-toastify.css" specifier in "react-toastify" package[31m
+    at e (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:6651:8)
+    at n (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:6663:14)
+    at o (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:6691:10)
+    at resolveExportsOrImports (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:32826:45)
+    at resolveDeepImport (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:32840:22)
+    at tryNodeResolve (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:32715:70)
+    at Object.handler (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:32554:16)
+    at Object.handler (file:///C:/Users/Usuario/Desktop/Ale/node_modules/vite/dist/node/chunks/config.js:33705:13)
+    at file:///C:/Users/Usuario/Desktop/Ale/node_modules/rollup/dist/es/shared/node-entry.js:22522:40
+    at async PluginDriver.hookFirstAndGetPlugin (file:///C:/Users/Usuario/Desktop/Ale/node_modules/rollup/dist/es/shared/node-entry.js:22404:28)[39m
