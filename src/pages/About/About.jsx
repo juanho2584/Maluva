@@ -11,14 +11,15 @@ const About = () => {
           <Col lg={6}>
             <h1 className="display-4 fw-bold mb-4">Nuestra Historia</h1>
             <p className="lead text-muted">
-              AleShop nació en 2026 con el objetivo de traer productos únicos
-              que iluminen el hogar y vistan la personalidad de cada cliente.
+              Maluva nace con el objetivo de traer productos únicos que iluminen
+              el hogar y vistan la personalidad de cada cliente a través de la
+              personalización.
             </p>
             <p className="text-secondary">
-              Lo que comenzó como un pequeño taller de velas artesanales se ha
-              convertido en una tienda integral donde el diseño y la calidad
-              convergen. Creemos que cada objeto en tu vida debe contar una
-              historia y reflejar quién eres.
+              Lo que comenzó como un proyecto de estampados y sublimación
+              artesanal se ha convertido en una tienda integral donde el diseño
+              y la calidad convergen. Creemos que cada objeto personalizado debe
+              contar una historia y reflejar quién eres.
             </p>
           </Col>
           <Col lg={6}>
@@ -87,7 +88,7 @@ const About = () => {
             <h2 className="fw-bold mb-4">Únete a nuestra aventura</h2>
             <p className="text-muted mb-0">
               Cada día trabajamos para innovar y ofrecerte lo mejor. ¡Gracias
-              por ser parte de AleShop!
+              por ser parte de Maluva!
             </p>
           </Col>
         </Row>

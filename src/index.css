@@ -39,6 +39,16 @@ h3,
   letter-spacing: -0.02em;
 }
 
+.logo-font {
+  font-family: "Dancing Script", cursive !important;
+  font-size: 1.8rem !important;
+}
+
+.fill-primary {
+  fill: var(--primary-color);
+  stroke: var(--primary-dark);
+}
+
 .text-primary {
   color: var(--primary-color) !important;
 }

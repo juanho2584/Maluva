@@ -50,7 +50,7 @@ const Contact = () => {
               </div>
               <div>
                 <h6 className="fw-bold mb-1">Email</h6>
-                <p className="text-muted mb-0">soporte@aleshop.com</p>
+                <p className="text-muted mb-0">maluva.estampados@gmail.com</p>
               </div>
             </div>
             <div className="mb-4 d-flex align-items-start">

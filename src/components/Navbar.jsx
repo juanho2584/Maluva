@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ShoppingCart, User, LogOut, Package } from "lucide-react";
+import { ShoppingCart, User, LogOut, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import {
@@ -30,10 +30,14 @@ const Navbar = () => {
         <BootstrapNavbar.Brand
           as={Link}
           to="/"
-          className="fw-bold fs-3 text-primary"
+          className="fw-bold fs-3 text-primary logo-font d-flex align-items-center"
         >
-          <Package className="me-2" />
-          AleShop
+          <img
+            src="/maluva-logo.png"
+            alt="Maluva Logo"
+            style={{ height: "40px", marginRight: "10px" }}
+          />
+          Maluva
         </BootstrapNavbar.Brand>
 
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />

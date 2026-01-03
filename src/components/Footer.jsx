@@ -17,17 +17,22 @@ const Footer = () => {
       <Container>
         <Row className="gy-4">
           <Col lg={4} md={6} className="footer-section">
-            <h5 className="text-uppercase mb-4 fw-bold">AleShop</h5>
+            <h5 className="text-uppercase mb-4 fw-bold">Maluva Estampados</h5>
             <p>
-              Tu tienda de confianza para velas, remeras, tasas y vinilos.
-              Calidad y diseño en un solo lugar.
+              Tu tienda de confianza para sublimación, estampados y vinilos
+              personalizados. Calidad y amor en cada detalle.
             </p>
             <div className="social-links-container mt-4">
               <a href="#" className="social-button facebook">
                 <Facebook size={20} />
                 <span className="social-text">Facebook</span>
               </a>
-              <a href="#" className="social-button instagram">
+              <a
+                href="https://www.instagram.com/malu_va.estampados/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-button instagram"
+              >
                 <Instagram size={20} />
                 <span className="social-text">Instagram</span>
               </a>
@@ -35,7 +40,12 @@ const Footer = () => {
                 <Twitter size={20} />
                 <span className="social-text">Twitter</span>
               </a>
-              <a href="#" className="social-button whatsapp">
+              <a
+                href="https://wa.me/message/BCUATXIVAMTXA1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-button whatsapp"
+              >
                 <MessageCircle size={20} />
                 <span className="social-text">WhatsApp</span>
               </a>
@@ -131,7 +141,7 @@ const Footer = () => {
               </li>
               <li className="mb-3 d-flex align-items-center">
                 <Mail size={20} className="me-2 text-primary" />{" "}
-                info@aleshop.com
+                maluva.estampados@gmail.com
               </li>
             </ul>
           </Col>
@@ -140,7 +150,7 @@ const Footer = () => {
         <Row className="align-items-center">
           <Col md={12} className="text-center">
             <p className="mb-0">
-              © 2026 AleShop - Todos los derechos reservados.
+              © 2026 Maluva Estampados - Todos los derechos reservados.
             </p>
           </Col>
         </Row>

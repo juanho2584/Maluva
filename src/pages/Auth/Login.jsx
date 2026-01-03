@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
 
     // Mock Login Logic
-    if (email === "admin@aleshop.com" && password === "admin123") {
+    if (email === "admin@maluva.com" && password === "admin123") {
       login({ name: "Admin", email, role: "admin" });
       Swal.fire({
         title: "¡Bienvenido Admin!",
@@ -113,7 +113,7 @@ const Login = () => {
                     Credenciales de prueba:
                   </p>
                   <p className="mb-0 text-muted">
-                    Admin: admin@aleshop.com / admin123
+                    Admin: admin@maluva.com / admin123
                   </p>
                   <p className="mb-0 text-muted">
                     User: user@test.com / user123
