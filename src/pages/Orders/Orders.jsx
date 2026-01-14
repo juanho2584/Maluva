@@ -1,16 +1,51 @@
 import React from "react";
 import { Container, Card, Table, Badge, Row, Col } from "react-bootstrap";
-import { Package, Calendar, Tag, CreditCard } from "lucide-react";
+import {
+  Package,
+  Calendar,
+  Tag,
+  CreditCard,
+  CheckCircle2,
+  Truck,
+  Clock,
+  XCircle,
+  RefreshCcw,
+} from "lucide-react";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 
 const Orders = () => {
-  const { orders } = useCart();
+  const { orders, updateOrderStatus, addToCart } = useCart();
   const { user } = useAuth();
 
   // Filter orders for the logged-in user
   const personOrders = orders.filter((o) => o.userEmail === user?.email);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pendiente":
+        return "warning";
+      case "Enviado":
+        return "info";
+      case "Completado":
+        return "success";
+      case "Cancelado":
+        return "danger";
+      default:
+        return "secondary";
+    }
+  };
+
+  const statusSteps = [
+    { label: "Pendiente", icon: Clock },
+    { label: "Enviado", icon: Truck },
+    { label: "Completado", icon: CheckCircle2 },
+  ];
+
+  const handleCancelOrder = (orderId) => {
+    updateOrderStatus(orderId, "Cancelado");
+  };
 
   if (personOrders.length === 0) {
     return (
@@ -62,7 +97,10 @@ const Orders = () => {
                       <span className="text-muted small d-block text-uppercase fw-bold">
                         Estado
                       </span>
-                      <Badge bg="info" className="rounded-pill px-3 py-2">
+                      <Badge
+                        bg={getStatusColor(order.status)}
+                        className="rounded-pill px-3 py-2"
+                      >
                         {order.status}
                       </Badge>
                     </div>
@@ -75,6 +113,71 @@ const Orders = () => {
                       </h5>
                     </div>
                   </div>
+
+                  {/* Status Tracker */}
+                  {order.status !== "Cancelado" && (
+                    <div className="px-4 pb-4">
+                      <div className="d-flex justify-content-between position-relative mt-4">
+                        <div
+                          className="position-absolute top-50 start-0 translate-middle-y w-100 bg-light-subtle"
+                          style={{ height: "2px", zIndex: 0 }}
+                        >
+                          <div
+                            className="bg-primary transition-all duration-500"
+                            style={{
+                              height: "100%",
+                              width:
+                                order.status === "Pendiente"
+                                  ? "0%"
+                                  : order.status === "Enviado"
+                                  ? "50%"
+                                  : "100%",
+                            }}
+                          />
+                        </div>
+                        {statusSteps.map((step, idx) => {
+                          const Icon = step.icon;
+                          const isCompleted =
+                            (order.status === "Enviado" && idx === 0) ||
+                            (order.status === "Completado" && idx <= 2) ||
+                            order.status === step.label;
+                          const isActive = order.status === step.label;
+
+                          return (
+                            <div
+                              key={idx}
+                              className="text-center position-relative"
+                              style={{ zIndex: 1 }}
+                            >
+                              <div
+                                className={`rounded-circle p-2 d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm ${
+                                  isActive
+                                    ? "bg-primary text-white"
+                                    : isCompleted
+                                    ? "bg-primary text-white"
+                                    : "bg-white text-muted border"
+                                }`}
+                                style={{ width: "40px", height: "40px" }}
+                              >
+                                {isCompleted && !isActive ? (
+                                  <CheckCircle2 size={20} />
+                                ) : (
+                                  <Icon size={20} />
+                                )}
+                              </div>
+                              <span
+                                className={`small fw-bold ${
+                                  isActive ? "text-primary" : "text-muted"
+                                }`}
+                              >
+                                {step.label}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </Card.Header>
                 <Card.Body className="p-4 bg-light bg-opacity-50">
                   <div className="table-responsive">
@@ -119,6 +222,28 @@ const Orders = () => {
                         ))}
                       </tbody>
                     </Table>
+                  </div>
+
+                  <div className="mt-4 d-flex justify-content-end gap-2">
+                    {order.status === "Pendiente" && (
+                      <button
+                        className="btn btn-outline-danger rounded-pill px-4 btn-sm d-flex align-items-center gap-2 fw-bold"
+                        onClick={() => handleCancelOrder(order.id)}
+                      >
+                        <XCircle size={16} /> Cancelar Pedido
+                      </button>
+                    )}
+                    {order.status === "Completado" && (
+                      <button
+                        className="btn btn-primary rounded-pill px-4 btn-sm d-flex align-items-center gap-2 fw-bold"
+                        onClick={() => {
+                          order.items.forEach((item) => addToCart(item));
+                          alert("Productos añadidos al carrito");
+                        }}
+                      >
+                        <RefreshCcw size={16} /> Volver a Comprar
+                      </button>
+                    )}
                   </div>
                 </Card.Body>
               </Card>

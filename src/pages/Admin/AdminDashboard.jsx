@@ -23,6 +23,10 @@ import {
   Package,
   ShoppingBag,
   User,
+  Clock,
+  Truck,
+  CheckCircle2,
+  XCircle,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
@@ -36,6 +40,27 @@ const AdminDashboard = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [activeTab, setActiveTab] = useState("products");
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Pendiente":
+        return "warning";
+      case "Enviado":
+        return "info";
+      case "Completado":
+        return "success";
+      case "Cancelado":
+        return "danger";
+      default:
+        return "secondary";
+    }
+  };
+
+  const statusSteps = [
+    { label: "Pendiente", icon: Clock },
+    { label: "Enviado", icon: Truck },
+    { label: "Completado", icon: CheckCircle2 },
+  ];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -320,15 +345,7 @@ const AdminDashboard = () => {
                           </td>
                           <td className="py-3 border-0">
                             <Badge
-                              bg={
-                                order.status === "Completado"
-                                  ? "success"
-                                  : order.status === "Enviado"
-                                  ? "info"
-                                  : order.status === "Cancelado"
-                                  ? "danger"
-                                  : "warning"
-                              }
+                              bg={getStatusColor(order.status)}
                               className="rounded-pill px-3 py-2"
                             >
                               {order.status}
@@ -549,6 +566,83 @@ const AdminDashboard = () => {
                   </Form.Select>
                 </Col>
               </Row>
+
+              {/* Status Tracker in Admin Panel */}
+              {selectedOrder.status !== "Cancelado" && (
+                <div className="bg-light p-4 rounded-4 mb-4">
+                  <h6 className="text-muted small text-uppercase fw-bold mb-4">
+                    Progreso del Pedido
+                  </h6>
+                  <div className="d-flex justify-content-between position-relative px-2">
+                    <div
+                      className="position-absolute top-50 start-0 translate-middle-y w-100 bg-white"
+                      style={{ height: "4px", zIndex: 0 }}
+                    >
+                      <div
+                        className="bg-primary transition-all duration-500"
+                        style={{
+                          height: "100%",
+                          width:
+                            selectedOrder.status === "Pendiente"
+                              ? "0%"
+                              : selectedOrder.status === "Enviado"
+                              ? "50%"
+                              : "100%",
+                        }}
+                      />
+                    </div>
+                    {statusSteps.map((step, idx) => {
+                      const Icon = step.icon;
+                      const isCompleted =
+                        (selectedOrder.status === "Enviado" && idx === 0) ||
+                        (selectedOrder.status === "Completado" && idx <= 2) ||
+                        selectedOrder.status === step.label;
+                      const isActive = selectedOrder.status === step.label;
+
+                      return (
+                        <div
+                          key={idx}
+                          className="text-center position-relative"
+                          style={{ zIndex: 1 }}
+                        >
+                          <div
+                            className={`rounded-circle p-2 d-flex align-items-center justify-content-center mx-auto mb-2 shadow-sm ${
+                              isActive
+                                ? "bg-primary text-white"
+                                : isCompleted
+                                ? "bg-primary text-white"
+                                : "bg-white text-muted border"
+                            }`}
+                            style={{ width: "40px", height: "40px" }}
+                          >
+                            {isCompleted && !isActive ? (
+                              <CheckCircle2 size={20} />
+                            ) : (
+                              <Icon size={20} />
+                            )}
+                          </div>
+                          <span
+                            className={`small fw-bold ${
+                              isActive ? "text-primary" : "text-muted"
+                            }`}
+                          >
+                            {step.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+              {selectedOrder.status === "Cancelado" && (
+                <div className="bg-danger bg-opacity-10 border border-danger border-opacity-25 p-4 rounded-4 mb-4 text-center">
+                  <XCircle size={40} className="text-danger mb-2" />
+                  <h6 className="text-danger fw-bold mb-0">PEDIDO CANCELADO</h6>
+                  <p className="text-danger small mb-0">
+                    Este pedido ha sido anulado y no se puede procesar.
+                  </p>
+                </div>
+              )}
 
               <h6 className="text-muted small text-uppercase fw-bold mb-3">
                 Productos Comprados

@@ -33,7 +33,7 @@ const Navbar = () => {
           className="fw-bold fs-3 text-primary logo-font d-flex align-items-center"
         >
           <img
-            src="/maluva-logo.png"
+            src="/src/assets/images/Logo 02.png"
             alt="Maluva Logo"
             style={{ height: "40px", marginRight: "10px" }}
           />
