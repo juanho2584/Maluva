@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart, User, LogOut, Heart } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import logo from '../assets/images/Logo 02.png'
 import {
   Badge,
   Navbar as BootstrapNavbar,
@@ -33,7 +34,7 @@ const Navbar = () => {
           className="fw-bold fs-3 text-primary logo-font d-flex align-items-center"
         >
           <img
-            src="/src/assets/images/Logo 02.png"
+            src={logo}
             alt="Maluva Logo"
             style={{ height: "40px", marginRight: "10px" }}
           />
