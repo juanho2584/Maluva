@@ -1,14 +1,32 @@
 import React from "react";
 import { Container, Row, Col, Button, Card, Badge } from "react-bootstrap";
-import { PRODUCTS, CATEGORIES } from "../../utils/mockData";
+import { useProducts } from "../../context/ProductContext";
 import ProductCard from "../../components/ProductCard";
-import { ArrowRight, ShoppingBag, Zap, ShieldCheck, Truck } from "lucide-react";
+import {
+  ArrowRight,
+  ShoppingBag,
+  Zap,
+  ShieldCheck,
+  Truck,
+  Tag,
+  Shirt,
+  Disc,
+  Sticker,
+  Coffee,
+  GlassWater,
+  CreditCard,
+  Tent,
+  Bath,
+  Milk,
+  Book,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Home = () => {
+  const { products, categories } = useProducts();
   // Show only a few featured products on home
-  const featuredProducts = PRODUCTS.slice(0, 4);
+  const featuredProducts = products.slice(0, 4);
 
   return (
     <div className="home-page">
@@ -27,7 +45,9 @@ const Home = () => {
                 </Badge>
                 <h1 className="display-3 fw-bold mb-4 text-dark">
                   Ilumina y Viste tu{" "}
-                  <span className="text-primary">Estilo Único</span>
+                  <span className="text-primary hero-accent-text">
+                    Estilo Único
+                  </span>
                 </h1>
                 <p className="lead text-muted mb-5">
                   Encuentra las mejores velas aromáticas, remeras exclusivas,
@@ -50,7 +70,7 @@ const Home = () => {
                     size="lg"
                     className="px-4 py-3 fw-bold rounded-pill"
                   >
-                    Conócenos
+                    Conócenos <ArrowRight size={20} className="ms-2" />
                   </Button>
                 </div>
               </motion.div>
@@ -125,20 +145,40 @@ const Home = () => {
               style={{ width: "60px", height: "4px" }}
             ></div>
           </div>
-          <Row className="g-4">
-            {CATEGORIES.map((cat) => (
-              <Col key={cat.id} md={3} sm={6}>
+          <Row className="g-3 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 justify-content-center">
+            {categories.map((cat) => (
+              <Col key={cat.id}>
                 <Link
                   to={`/category/${cat.id}`}
                   className="text-decoration-none text-dark"
                 >
-                  <Card className="category-card border-0 shadow-sm h-100 text-center py-4">
-                    <Card.Body>
-                      <div className="category-icon-wrapper mb-3 mx-auto">
-                        {/* In a real app we would use Lucide icons dynamically, but here we just use names */}
-                        <ShoppingBag size={32} className="text-primary" />
+                  <Card className="category-card border-0 shadow-sm h-100 text-center py-3 px-2">
+                    <Card.Body className="p-0">
+                      <div
+                        className="category-icon-wrapper mb-2 mx-auto d-flex align-items-center justify-content-center"
+                        style={{ width: "50px", height: "50px" }}
+                      >
+                        {(() => {
+                          const iconMap = {
+                            Tag,
+                            Shirt,
+                            Disc,
+                            Sticker,
+                            Coffee,
+                            GlassWater,
+                            CreditCard,
+                            Tent,
+                            Bath,
+                            Milk,
+                            Book,
+                          };
+                          const IconComp = iconMap[cat.icon] || ShoppingBag;
+                          return (
+                            <IconComp size={24} className="text-primary" />
+                          );
+                        })()}
                       </div>
-                      <h5 className="fw-bold mb-0">{cat.name}</h5>
+                      <h6 className="fw-bold mb-0 small">{cat.name}</h6>
                     </Card.Body>
                   </Card>
                 </Link>

@@ -13,8 +13,8 @@ import {
   Tab,
   Nav,
 } from "react-bootstrap";
-import { PRODUCTS, CATEGORIES } from "../../utils/mockData";
 import { useCart } from "../../context/CartContext";
+import { useProducts } from "../../context/ProductContext";
 import {
   Plus,
   Edit,
@@ -27,19 +27,61 @@ import {
   Truck,
   CheckCircle2,
   XCircle,
+  Tag,
+  Shirt,
+  Disc,
+  Sticker,
+  Coffee,
+  GlassWater,
+  CreditCard,
+  Tent,
+  Bath,
+  Milk,
+  Book,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 
 const AdminDashboard = () => {
-  const [products, setProducts] = useState(PRODUCTS);
+  const {
+    products,
+    categories,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+  } = useProducts();
   const { orders, updateOrderStatus } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [editingCategory, setEditingCategory] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [activeTab, setActiveTab] = useState("products");
+
+  const [categoryFormData, setCategoryFormData] = useState({
+    id: "",
+    name: "",
+    icon: "Tag",
+  });
+
+  const categoryIcons = [
+    { name: "Tag", icon: Tag },
+    { name: "Shirt", icon: Shirt },
+    { name: "Disc", icon: Disc },
+    { name: "Sticker", icon: Sticker },
+    { name: "Coffee", icon: Coffee },
+    { name: "GlassWater", icon: GlassWater },
+    { name: "CreditCard", icon: CreditCard },
+    { name: "Tent", icon: Tent },
+    { name: "Bath", icon: Bath },
+    { name: "Milk", icon: Milk },
+    { name: "Book", icon: Book },
+  ];
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -65,7 +107,7 @@ const AdminDashboard = () => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    category: "velas",
+    category: categories.length > 0 ? categories[0].id : "",
     stock: "",
     description: "",
     image: "",
@@ -77,7 +119,7 @@ const AdminDashboard = () => {
   const filteredProducts = products.filter(
     (p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchTerm.toLowerCase())
+      p.category.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleOpenModal = (product = null) => {
@@ -89,7 +131,7 @@ const AdminDashboard = () => {
       setFormData({
         name: "",
         price: "",
-        category: "velas",
+        category: categories.length > 0 ? categories[0].id : "",
         stock: "",
         description: "",
         image: "",
@@ -97,6 +139,70 @@ const AdminDashboard = () => {
       });
     }
     setShowModal(true);
+  };
+
+  const handleOpenCategoryModal = (category = null) => {
+    if (category) {
+      setEditingCategory(category);
+      setCategoryFormData(category);
+    } else {
+      setEditingCategory(null);
+      setCategoryFormData({
+        id: "",
+        name: "",
+        icon: "Tag",
+      });
+    }
+    setShowCategoryModal(true);
+  };
+
+  const handleCategoryDelete = (id) => {
+    const productsInCat = products.filter((p) => p.category === id);
+    if (productsInCat.length > 0) {
+      Swal.fire(
+        "No se puede eliminar",
+        `Hay ${productsInCat.length} productos usando esta categoría. Por favor, muévelos o elimínalos primero.`,
+        "error",
+      );
+      return;
+    }
+
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Se eliminará esta categoría de la lista.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCategory(id);
+        Swal.fire("Eliminada", "La categoría ha sido eliminada.", "success");
+      }
+    });
+  };
+
+  const handleCategorySubmit = (e) => {
+    e.preventDefault();
+    if (editingCategory) {
+      updateCategory(editingCategory.id, { ...categoryFormData });
+      Swal.fire(
+        "Actualizada",
+        "Categoría actualizada correctamente.",
+        "success",
+      );
+    } else {
+      // Check if id already exists
+      if (categories.some((c) => c.id === categoryFormData.id)) {
+        Swal.fire("Error", "Ya existe una categoría con ese ID.", "error");
+        return;
+      }
+      addCategory({ ...categoryFormData });
+      Swal.fire("Creada", "Categoría agregada correctamente.", "success");
+    }
+    setShowCategoryModal(false);
   };
 
   const handleDelete = (id) => {
@@ -111,7 +217,7 @@ const AdminDashboard = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        setProducts(products.filter((p) => p.id !== id));
+        deleteProduct(id);
         Swal.fire("Eliminado", "El producto ha sido eliminado.", "success");
       }
     });
@@ -120,19 +226,14 @@ const AdminDashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editingProduct) {
-      setProducts(
-        products.map((p) =>
-          p.id === editingProduct.id ? { ...formData, id: p.id } : p
-        )
-      );
+      updateProduct(editingProduct.id, { ...formData });
       Swal.fire(
         "Actualizado",
         "Producto actualizado correctamente.",
-        "success"
+        "success",
       );
     } else {
-      const newProduct = { ...formData, id: Date.now() };
-      setProducts([...products, newProduct]);
+      addProduct({ ...formData });
       Swal.fire("Creado", "Producto agregado correctamente.", "success");
     }
     setShowModal(false);
@@ -175,6 +276,15 @@ const AdminDashboard = () => {
             className="px-4 py-2 rounded-pill fw-bold shadow-sm"
           >
             <Plus size={20} className="me-2" /> Nuevo Producto
+          </Button>
+        )}
+        {activeTab === "categories" && (
+          <Button
+            variant="primary"
+            onClick={() => handleOpenCategoryModal()}
+            className="px-4 py-2 rounded-pill fw-bold shadow-sm"
+          >
+            <Plus size={20} className="me-2" /> Nueva Categoría
           </Button>
         )}
       </div>
@@ -282,6 +392,71 @@ const AdminDashboard = () => {
                         </td>
                       </tr>
                     ))}
+                  </tbody>
+                </Table>
+              </div>
+            </Tab>
+
+            <Tab
+              eventKey="categories"
+              title={
+                <span>
+                  <Tag size={18} className="me-2" />
+                  Categorías
+                </span>
+              }
+            >
+              <div className="p-4">
+                <Table responsive hover className="align-middle mb-0">
+                  <thead className="bg-light">
+                    <tr>
+                      <th className="border-0 px-4 py-3">Icono</th>
+                      <th className="border-0 py-3">Nombre</th>
+                      <th className="border-0 py-3">ID (Slug)</th>
+                      <th className="border-0 py-3 text-end px-4">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categories.map((category) => {
+                      const IconComponent =
+                        categoryIcons.find((i) => i.name === category.icon)
+                          ?.icon || Tag;
+                      return (
+                        <tr key={category.id}>
+                          <td className="px-4 py-3">
+                            <div
+                              className="bg-light rounded-circle d-flex align-items-center justify-content-center"
+                              style={{ width: "40px", height: "40px" }}
+                            >
+                              <IconComponent
+                                size={20}
+                                className="text-primary"
+                              />
+                            </div>
+                          </td>
+                          <td className="py-3 fw-bold">{category.name}</td>
+                          <td className="py-3 text-muted">{category.id}</td>
+                          <td className="py-3 text-end px-4">
+                            <Button
+                              variant="light"
+                              size="sm"
+                              className="me-2 text-primary rounded-circle p-2"
+                              onClick={() => handleOpenCategoryModal(category)}
+                            >
+                              <Edit size={16} />
+                            </Button>
+                            <Button
+                              variant="light"
+                              size="sm"
+                              className="text-danger rounded-circle p-2"
+                              onClick={() => handleCategoryDelete(category.id)}
+                            >
+                              <Trash2 size={16} />
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </Table>
               </div>
@@ -430,7 +605,7 @@ const AdminDashboard = () => {
                     }
                     className="py-2 border-light bg-light text-capitalize"
                   >
-                    {CATEGORIES.map((c) => (
+                    {categories.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.name}
                       </option>
@@ -586,8 +761,8 @@ const AdminDashboard = () => {
                             selectedOrder.status === "Pendiente"
                               ? "0%"
                               : selectedOrder.status === "Enviado"
-                              ? "50%"
-                              : "100%",
+                                ? "50%"
+                                : "100%",
                         }}
                       />
                     </div>
@@ -610,8 +785,8 @@ const AdminDashboard = () => {
                               isActive
                                 ? "bg-primary text-white"
                                 : isCompleted
-                                ? "bg-primary text-white"
-                                : "bg-white text-muted border"
+                                  ? "bg-primary text-white"
+                                  : "bg-white text-muted border"
                             }`}
                             style={{ width: "40px", height: "40px" }}
                           >
@@ -706,6 +881,125 @@ const AdminDashboard = () => {
             </Modal.Footer>
           </>
         )}
+      </Modal>
+
+      {/* Category Modal */}
+      <Modal
+        show={showCategoryModal}
+        onHide={() => setShowCategoryModal(false)}
+        centered
+      >
+        <Form onSubmit={handleCategorySubmit}>
+          <Modal.Header closeButton className="border-0 px-4 pt-4">
+            <Modal.Title className="fw-bold">
+              {editingCategory ? "Editar Categoría" : "Nueva Categoría"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="p-4">
+            <Row className="gy-3">
+              <Col md={12}>
+                <Form.Group>
+                  <Form.Label className="fw-bold small text-muted text-uppercase">
+                    Nombre de la Categoría
+                  </Form.Label>
+                  <Form.Control
+                    required
+                    value={categoryFormData.name}
+                    onChange={(e) =>
+                      setCategoryFormData({
+                        ...categoryFormData,
+                        name: e.target.value,
+                      })
+                    }
+                    className="py-2 border-light bg-light"
+                    placeholder="Ej: Remeras, Velas..."
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={12}>
+                <Form.Group>
+                  <Form.Label className="fw-bold small text-muted text-uppercase">
+                    ID (Slug único)
+                  </Form.Label>
+                  <Form.Control
+                    required
+                    disabled={!!editingCategory}
+                    value={categoryFormData.id}
+                    onChange={(e) =>
+                      setCategoryFormData({
+                        ...categoryFormData,
+                        id: e.target.value
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")
+                          .replace(/[^a-z0-9-]/g, ""),
+                      })
+                    }
+                    className="py-2 border-light bg-light"
+                    placeholder="ej-categoria-nueva"
+                  />
+                  <Form.Text className="text-muted">
+                    El ID se usa para la URL (ej: /category/mi-categoria)
+                  </Form.Text>
+                </Form.Group>
+              </Col>
+              <Col md={12}>
+                <Form.Group>
+                  <Form.Label className="fw-bold small text-muted text-uppercase">
+                    Icono
+                  </Form.Label>
+                  <div className="d-flex flex-wrap gap-2 p-3 bg-light rounded-3 border">
+                    {categoryIcons.map((item) => {
+                      const IconComp = item.icon;
+                      return (
+                        <div
+                          key={item.name}
+                          onClick={() =>
+                            setCategoryFormData({
+                              ...categoryFormData,
+                              icon: item.name,
+                            })
+                          }
+                          className={`p-2 rounded cursor-pointer transition-all ${
+                            categoryFormData.icon === item.name
+                              ? "bg-primary text-white shadow-sm"
+                              : "bg-white text-muted hover-bg-light"
+                          }`}
+                          style={{
+                            cursor: "pointer",
+                            width: "40px",
+                            height: "40px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                          title={item.name}
+                        >
+                          <IconComp size={20} />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+          </Modal.Body>
+          <Modal.Footer className="border-0 px-4 pb-4 pt-0">
+            <Button
+              variant="light"
+              onClick={() => setShowCategoryModal(false)}
+              className="px-4 py-2 rounded-pill"
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="primary"
+              type="submit"
+              className="px-5 py-2 rounded-pill fw-bold"
+            >
+              {editingCategory ? "Guardar" : "Crear"}
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </Container>
   );

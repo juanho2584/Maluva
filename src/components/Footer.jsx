@@ -16,15 +16,15 @@ const Footer = () => {
     <footer className="bg-white text-dark pt-5 pb-4 mt-auto border-top">
       <Container>
         <Row className="gy-4">
-          <Col lg={4} md={6} className="footer-section">
+          <Col lg={4} md={4} sm={12} className="footer-section">
             <h5 className="text-uppercase mb-4 fw-bold">Maluva Estampados</h5>
-            <p>
+            <p className="pe-lg-5 text-muted small">
               Tu tienda de confianza para sublimación, estampados y vinilos
               personalizados. Calidad y amor en cada detalle.
             </p>
             <div className="social-links-container mt-4">
               <a href="#" className="social-button facebook">
-                <Facebook size={20} />
+                <Facebook size={18} />
                 <span className="social-text">Facebook</span>
               </a>
               <a
@@ -33,12 +33,8 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="social-button instagram"
               >
-                <Instagram size={20} />
+                <Instagram size={18} />
                 <span className="social-text">Instagram</span>
-              </a>
-              <a href="#" className="social-button twitter">
-                <Twitter size={20} />
-                <span className="social-text">Twitter</span>
               </a>
               <a
                 href="https://wa.me/message/BCUATXIVAMTXA1"
@@ -46,102 +42,73 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="social-button whatsapp"
               >
-                <MessageCircle size={20} />
+                <MessageCircle size={18} />
                 <span className="social-text">WhatsApp</span>
               </a>
             </div>
           </Col>
 
-          <Col lg={2} md={6} className="footer-section">
-            <h5 className="text-uppercase mb-4 fw-bold">Enlaces</h5>
+          <Col lg={4} md={4} sm={12} className="footer-section ps-md-4 ps-lg-5">
+            <h5 className="text-uppercase mb-4 fw-bold">Navegación</h5>
             <ul className="list-unstyled">
               <li className="mb-2">
                 <Link
                   to="/"
-                  className="text-dark text-decoration-none hover-primary"
+                  className="text-dark text-decoration-none hover-primary d-flex align-items-center small"
                 >
-                  Inicio
+                  <span className="me-2">›</span> Inicio
                 </Link>
               </li>
               <li className="mb-2">
                 <Link
                   to="/products"
-                  className="text-dark text-decoration-none hover-primary"
+                  className="text-dark text-decoration-none hover-primary d-flex align-items-center small"
                 >
-                  Productos
+                  <span className="me-2">›</span> Productos
                 </Link>
               </li>
               <li className="mb-2">
                 <Link
                   to="/about"
-                  className="text-dark text-decoration-none hover-primary"
+                  className="text-dark text-decoration-none hover-primary d-flex align-items-center small"
                 >
-                  Nosotros
+                  <span className="me-2">›</span> Nosotros
                 </Link>
               </li>
               <li className="mb-2">
                 <Link
                   to="/contact"
-                  className="text-dark text-decoration-none hover-primary"
+                  className="text-dark text-decoration-none hover-primary d-flex align-items-center small"
                 >
-                  Contacto
+                  <span className="me-2">›</span> Contacto
                 </Link>
               </li>
             </ul>
           </Col>
 
-          <Col lg={3} md={6} className="footer-section">
-            <h5 className="text-uppercase mb-4 fw-bold">Categorías</h5>
-            <ul className="list-unstyled">
-              <li className="mb-2">
-                <Link
-                  to="/category/velas"
-                  className="text-dark text-decoration-none hover-primary"
-                >
-                  Velas
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  to="/category/remeras"
-                  className="text-dark text-decoration-none hover-primary"
-                >
-                  Remeras
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  to="/category/tasas"
-                  className="text-dark text-decoration-none hover-primary"
-                >
-                  Tasas
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  to="/category/vinilos"
-                  className="text-dark text-decoration-none hover-primary"
-                >
-                  Vinilos
-                </Link>
-              </li>
-            </ul>
-          </Col>
-
-          <Col lg={3} md={6} className="footer-section">
+          <Col lg={4} md={4} sm={12} className="footer-section ps-md-4 ps-lg-4">
             <h5 className="text-uppercase mb-4 fw-bold">Contacto</h5>
             <ul className="list-unstyled">
-              <li className="mb-3 d-flex align-items-center">
-                <MapPin size={20} className="me-2 text-primary" /> Buenos Aires,
-                Argentina
+              <li className="mb-3 d-flex align-items-start small">
+                <MapPin size={18} className="me-3 text-primary mt-1" />
+                <div>
+                  <div className="fw-bold">Ubicación</div>
+                  <div className="text-muted">Buenos Aires, AR</div>
+                </div>
               </li>
-              <li className="mb-3 d-flex align-items-center">
-                <Phone size={20} className="me-2 text-primary" /> +54 9 11
-                1234-5678
+              <li className="mb-3 d-flex align-items-start small">
+                <Phone size={18} className="me-3 text-primary mt-1" />
+                <div>
+                  <div className="fw-bold">WhatsApp</div>
+                  <div className="text-muted">+54 9 11 1234-5678</div>
+                </div>
               </li>
-              <li className="mb-3 d-flex align-items-center">
-                <Mail size={20} className="me-2 text-primary" />{" "}
-                maluva.estampados@gmail.com
+              <li className="mb-3 d-flex align-items-start small text-truncate">
+                <Mail size={18} className="me-3 text-primary mt-1" />
+                <div>
+                  <div className="fw-bold">Email</div>
+                  <div className="text-muted">maluva.estamp@gmail.com</div>
+                </div>
               </li>
             </ul>
           </Col>

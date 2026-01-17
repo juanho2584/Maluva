@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import { PRODUCTS, CATEGORIES } from "../../utils/mockData";
+import { useProducts } from "../../context/ProductContext";
 import ProductCard from "../../components/ProductCard";
 
 const Category = () => {
+  const { products, categories } = useProducts();
   const { categoryName } = useParams();
-  const [filteredProducts, setFilteredProducts] = useState(PRODUCTS);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    let result = PRODUCTS;
+    let result = products;
     if (categoryName) {
       result = result.filter((p) => p.category === categoryName);
     }
     if (searchTerm) {
       result = result.filter((p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
     setFilteredProducts(result);
   }, [categoryName, searchTerm]);
 
   const title = categoryName
-    ? CATEGORIES.find((c) => c.id === categoryName)?.name
+    ? categories.find((c) => c.id === categoryName)?.name
     : "Todos los Productos";
 
   return (
