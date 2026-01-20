@@ -11,8 +11,8 @@ const About = () => {
           <Col lg={6}>
             <h1 className="display-4 fw-bold mb-4">Nuestra Historia</h1>
             <p className="lead text-muted">
-              Maluva nace con el objetivo de traer productos únicos que iluminen
-              el hogar y vistan la personalidad de cada cliente a través de la
+              Maluva nace con el objetivo de traer productos únicos que den vida
+              a tu hogar y vistan la personalidad de cada cliente a través de la
               personalización.
             </p>
             <p className="text-secondary">

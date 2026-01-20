@@ -912,7 +912,7 @@ const AdminDashboard = () => {
                       })
                     }
                     className="py-2 border-light bg-light"
-                    placeholder="Ej: Remeras, Velas..."
+                    placeholder="Ej: Remeras, Vinilos..."
                   />
                 </Form.Group>
               </Col>

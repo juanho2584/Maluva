@@ -1,16 +1,65 @@
-# React + Vite
+# Maluva Estampados | Tienda de Personalización
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Maluva Logo](./src/assets/images/Logo%2002.png)
 
-Currently, two official plugins are available:
+Maluva Estampados es una plataforma de e-commerce moderna y elegante dedicada a la venta de productos personalizados, incluyendo remeras, vinilos, tazas y más. La aplicación ofrece una experiencia de usuario fluida con un diseño premium enfocado en la armonía visual y la interactividad.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Características Principales
 
-## React Compiler
+### Para Usuarios
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Landing Page Dinámica**: Secciones de productos destacados, categorías interactivas y banners de colecciones.
+- **Catálogo Completo**: Navegación por categorías y visualización de ofertas especiales.
+- **Carrito de Compras**: Gestión de productos con persistencia de datos y animaciones táctiles.
+- **Autenticación Segura**: Sistema de Login y Registro con validaciones en tiempo real (requisitos de contraseña robustos, validación de DNI, etc.).
+- **Historial de Pedidos**: Los usuarios pueden seguir el estado de sus compras (Pendiente, Enviado, Completado).
+- **Diseño Premium**: Uso de micro-animaciones con Framer Motion, efectos de iluminación (glow) y componentes responsivos.
 
-## Expanding the ESLint configuration
+### Para Administradores (Panel de Control)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Gestión de Stock**: CRUD completo de productos (crear, editar, eliminar) con carga de imágenes y gestión de insignias (badges).
+- **Gestión de Categorías**: Creación y edición de categorías con selección de iconos personalizados.
+- **Control de Pedidos**: Panel centralizado para visualizar ventas y actualizar el estado de los pedidos en tiempo real.
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend**: React 19 + Vite
+- **Estilos**: React-Bootstrap & Vanilla CSS
+- **Iconografía**: Lucide React
+- **Animaciones**: Framer Motion
+- **Notificaciones**: SweetAlert2 & React Toastify
+- **Enrutamiento**: React Router Dom v7
+- **Gestión de Estado**: Context API (Auth, Cart, Products)
+
+## 📦 Instalación y Uso
+
+1. Clonar el repositorio:
+
+   ```bash
+   git clone [url-del-repositorio]
+   ```
+
+2. Instalar dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Iniciar el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Generar el build para producción:
+   ```bash
+   npm run build
+   ```
+
+## 🎨 Identidad de Marca
+
+Maluva ha evolucionado para ofrecer una experiencia integral en **personalización, estampados y vinilos**. Cada detalle de la interfaz ha sido diseñado para reflejar la pasión y calidez que la marca pone en sus productos.
+
+---
+
+© 2026 Maluva Estampados - Todos los derechos reservados.

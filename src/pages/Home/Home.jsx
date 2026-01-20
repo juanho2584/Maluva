@@ -44,14 +44,15 @@ const Home = () => {
                   Nueva Colección 2026
                 </Badge>
                 <h1 className="display-3 fw-bold mb-4 text-dark">
-                  Ilumina y Viste tu{" "}
+                  Personaliza y Viste tu{" "}
                   <span className="text-primary hero-accent-text">
                     Estilo Único
                   </span>
                 </h1>
                 <p className="lead text-muted mb-5">
-                  Encuentra las mejores velas aromáticas, remeras exclusivas,
-                  tasas de diseño y vinilos de colección en un solo lugar.
+                  Encuentra los mejores estampados personalizados, remeras
+                  exclusivas, tazas de diseño y vinilos de colección en un solo
+                  lugar.
                 </p>
                 <div className="d-flex gap-3">
                   <Button
