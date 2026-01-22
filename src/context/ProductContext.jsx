@@ -12,8 +12,30 @@ export const useProducts = () => {
 };
 
 export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState(PRODUCTS);
-  const [categories, setCategories] = useState(CATEGORIES);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        // Simulate backend delay
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+
+        setProducts(PRODUCTS);
+        setCategories(CATEGORIES);
+        setError(null);
+      } catch (err) {
+        setError("Error al cargar los datos. Por favor, intenta de nuevo.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const addProduct = (product) => {
     setProducts((prev) => [...prev, { ...product, id: Date.now() }]);
@@ -48,6 +70,8 @@ export const ProductProvider = ({ children }) => {
       value={{
         products,
         categories,
+        loading,
+        error,
         addProduct,
         updateProduct,
         deleteProduct,

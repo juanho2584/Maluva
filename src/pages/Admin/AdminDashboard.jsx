@@ -41,11 +41,15 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const AdminDashboard = () => {
   const {
     products,
     categories,
+    loading,
+    error,
     addProduct,
     updateProduct,
     deleteProduct,
@@ -62,6 +66,13 @@ const AdminDashboard = () => {
   const [editingCategory, setEditingCategory] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [activeTab, setActiveTab] = useState("products");
+
+  if (loading)
+    return <LoadingSpinner message="Cargando panel de administración..." />;
+  if (error)
+    return (
+      <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+    );
 
   const [categoryFormData, setCategoryFormData] = useState({
     id: "",

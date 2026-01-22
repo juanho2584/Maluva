@@ -22,9 +22,19 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const Home = () => {
-  const { products, categories } = useProducts();
+  const { products, categories, loading, error } = useProducts();
+
+  if (loading)
+    return <LoadingSpinner message="Cargando las mejores ofertas..." />;
+  if (error)
+    return (
+      <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+    );
+
   // Show only a few featured products on home
   const featuredProducts = products.slice(0, 4);
 

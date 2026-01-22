@@ -3,14 +3,18 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useProducts } from "../../context/ProductContext";
 import ProductCard from "../../components/ProductCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
 
 const Category = () => {
-  const { products, categories } = useProducts();
+  const { products, categories, loading, error } = useProducts();
   const { categoryName } = useParams();
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    if (loading) return;
+
     let result = products;
     if (categoryName) {
       result = result.filter((p) => p.category === categoryName);
@@ -26,6 +30,12 @@ const Category = () => {
   const title = categoryName
     ? categories.find((c) => c.id === categoryName)?.name
     : "Todos los Productos";
+
+  if (loading) return <LoadingSpinner message="Cargando productos..." />;
+  if (error)
+    return (
+      <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+    );
 
   return (
     <Container className="py-5">
