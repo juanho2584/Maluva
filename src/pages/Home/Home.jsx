@@ -2,24 +2,8 @@ import React from "react";
 import { Container, Row, Col, Button, Card, Badge } from "react-bootstrap";
 import { useProducts } from "../../context/ProductContext";
 import ProductCard from "../../components/ProductCard";
-import {
-  ArrowRight,
-  ShoppingBag,
-  Zap,
-  ShieldCheck,
-  Truck,
-  Tag,
-  Shirt,
-  Disc,
-  Sticker,
-  Coffee,
-  GlassWater,
-  CreditCard,
-  Tent,
-  Bath,
-  Milk,
-  Book,
-} from "lucide-react";
+import { ArrowRight, ShoppingBag, Zap, ShieldCheck, Truck } from "lucide-react";
+import { getIconByName } from "../../utils/icons";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -170,20 +154,7 @@ const Home = () => {
                         style={{ width: "50px", height: "50px" }}
                       >
                         {(() => {
-                          const iconMap = {
-                            Tag,
-                            Shirt,
-                            Disc,
-                            Sticker,
-                            Coffee,
-                            GlassWater,
-                            CreditCard,
-                            Tent,
-                            Bath,
-                            Milk,
-                            Book,
-                          };
-                          const IconComp = iconMap[cat.icon] || ShoppingBag;
+                          const IconComp = getIconByName(cat.icon);
                           return (
                             <IconComp size={24} className="text-primary" />
                           );

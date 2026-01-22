@@ -28,17 +28,8 @@ import {
   CheckCircle2,
   XCircle,
   Tag,
-  Shirt,
-  Disc,
-  Sticker,
-  Coffee,
-  GlassWater,
-  CreditCard,
-  Tent,
-  Bath,
-  Milk,
-  Book,
 } from "lucide-react";
+import { CATEGORY_ICONS, getIconByName } from "../../utils/icons";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -79,20 +70,6 @@ const AdminDashboard = () => {
     name: "",
     icon: "Tag",
   });
-
-  const categoryIcons = [
-    { name: "Tag", icon: Tag },
-    { name: "Shirt", icon: Shirt },
-    { name: "Disc", icon: Disc },
-    { name: "Sticker", icon: Sticker },
-    { name: "Coffee", icon: Coffee },
-    { name: "GlassWater", icon: GlassWater },
-    { name: "CreditCard", icon: CreditCard },
-    { name: "Tent", icon: Tent },
-    { name: "Bath", icon: Bath },
-    { name: "Milk", icon: Milk },
-    { name: "Book", icon: Book },
-  ];
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -429,9 +406,7 @@ const AdminDashboard = () => {
                   </thead>
                   <tbody>
                     {categories.map((category) => {
-                      const IconComponent =
-                        categoryIcons.find((i) => i.name === category.icon)
-                          ?.icon || Tag;
+                      const IconComponent = getIconByName(category.icon);
                       return (
                         <tr key={category.id}>
                           <td className="px-4 py-3">

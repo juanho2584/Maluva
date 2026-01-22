@@ -1,1 +1,0 @@
-src/pages/Home/Home.jsx:                  Encuentra las mejores velas aromáticas, remeras exclusivas,
